@@ -153,7 +153,7 @@ export function CompetitorDataTable() {
                   <SelectValue placeholder="All Competitors" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="">All Competitors</SelectItem>
+                  {/* <SelectItem value="">All Competitors</SelectItem> */}
                   {(competitors as any[])?.map((competitor: any) => (
                     <SelectItem key={competitor.id} value={competitor.id}>
                       {competitor.name}
@@ -167,7 +167,7 @@ export function CompetitorDataTable() {
                   <SelectValue placeholder="All Products" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="">All Products</SelectItem>
+                  {/* <SelectItem value="">All Products</SelectItem> */}
                   {(products as any[])?.map((product: any) => (
                     <SelectItem key={product.id} value={product.id}>
                       {product.name}
