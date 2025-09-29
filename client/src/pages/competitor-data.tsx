@@ -10,10 +10,13 @@ import { useAuth } from "@/hooks/use-auth";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { Plus } from "lucide-react";
+import { selectIsCollapsed, useDataStore } from "@/store/useDataStore";
+import { cn } from "@/lib/utils";
 
 export default function CompetitorData() {
   const { user } = useAuth();
   const { toast } = useToast();
+  const isCollapsed = useDataStore(selectIsCollapsed)
   const [newCompetitor, setNewCompetitor] = useState({
     name: "",
     category: "",
@@ -67,7 +70,7 @@ export default function CompetitorData() {
     <div className="min-h-screen flex bg-background">
       <Sidebar />
       
-      <div className="flex-1 flex flex-col overflow-hidden">
+      <div className={cn("flex-1 flex flex-col overflow-hidden",isCollapsed ? 'ml-12' : 'ml-60')}>
         {/* Header */}
         <header className="bg-card border-b border-border px-6 py-4">
           <div className="flex items-center justify-between">

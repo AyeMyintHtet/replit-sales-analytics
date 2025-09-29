@@ -7,10 +7,13 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Badge } from "@/components/ui/badge";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar, PieChart, Pie, Cell } from "recharts";
 import { TrendingUp, TrendingDown, BarChart3, PieChart as PieChartIcon, Calculator } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { selectIsCollapsed, useDataStore } from "@/store/useDataStore";
 
 export default function MarketTrends() {
   const [timeframe, setTimeframe] = useState("30");
   const [analysisType, setAnalysisType] = useState("pricing");
+  const isCollapsed = useDataStore(selectIsCollapsed)
 
   const { data: trendsData, isLoading: trendsLoading } = useQuery({
     queryKey: ["/api/price-trends", { days: timeframe }],
@@ -98,12 +101,11 @@ export default function MarketTrends() {
   })) || [];
 
   const COLORS = ['hsl(221, 83%, 53%)', 'hsl(160, 84%, 39%)', 'hsl(43, 96%, 56%)', 'hsl(262, 83%, 58%)', 'hsl(12, 76%, 61%)'];
-
   return (
     <div className="min-h-screen flex bg-background">
       <Sidebar />
       
-      <div className="flex-1 flex flex-col overflow-hidden">
+      <div className={cn("flex-1 flex flex-col overflow-hidden",isCollapsed ? 'ml-12' : 'ml-60')}>
         {/* Header */}
         <header className="bg-card border-b border-border px-6 py-4">
           <div className="flex items-center justify-between">

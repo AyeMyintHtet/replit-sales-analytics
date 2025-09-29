@@ -7,13 +7,16 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
 import { Plus, BarChart3, Users } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { selectIsCollapsed, useDataStore } from "@/store/useDataStore";
 
 export default function Dashboard() {
+  const isCollapsed = useDataStore(selectIsCollapsed)
   return (
     <div className="min-h-screen flex bg-background">
       <Sidebar />
       
-      <div className="flex-1 flex flex-col overflow-hidden">
+      <div className={cn("flex-1 flex flex-col overflow-hidden",isCollapsed ? 'ml-12' : 'ml-60')}>
         {/* Header */}
         <header className="bg-card border-b border-border px-6 py-4">
           <div className="flex items-center justify-between">

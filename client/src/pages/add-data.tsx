@@ -12,11 +12,13 @@ import { useAuth } from "@/hooks/use-auth";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { Plus, Package, Building, DollarSign } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { selectIsCollapsed, useDataStore } from "@/store/useDataStore";
 
 export default function AddData() {
   const { user } = useAuth();
   const { toast } = useToast();
-
+  const isCollapsed = useDataStore(selectIsCollapsed)
   // Competitor form state
   const [competitorForm, setCompetitorForm] = useState({
     name: "",
@@ -177,7 +179,7 @@ export default function AddData() {
     <div className="min-h-screen flex bg-background">
       <Sidebar />
       
-      <div className="flex-1 flex flex-col overflow-hidden">
+      <div className={cn("flex-1 flex flex-col overflow-hidden",isCollapsed ? 'ml-12' : 'ml-60')}>
         {/* Header */}
         <header className="bg-card border-b border-border px-6 py-4">
           <div className="flex items-center justify-between">

@@ -10,9 +10,12 @@ import {
   Users, 
   Settings, 
   LogOut,
-  User
+  User,
+  ArrowBigLeftDash
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useState } from "react";
+import { useDataStore } from "@/store/useDataStore";
 
 const navigation = [
   { name: "Dashboard", href: "/", icon: ChartPie },
@@ -25,8 +28,9 @@ const navigation = [
 
 export function Sidebar() {
   const { user, logoutMutation } = useAuth();
+  const {isCollapsed} = useDataStore((state)=> state)
+  const dataStore = useDataStore()
   const [location] = useLocation();
-
   const handleLogout = () => {
     logoutMutation.mutate();
   };
@@ -47,28 +51,35 @@ export function Sidebar() {
   const getRoleColor = (role: string) => {
     switch (role) {
       case "admin":
-        return "bg-destructive/10 text-destructive";
+        return "bg-destructive text-destructive";
       case "sales_manager":
-        return "bg-primary/10 text-primary";
+        return "bg-primary text-primary";
       case "sales_rep":
-        return "bg-secondary/10 text-secondary-foreground";
+        return "bg-secondary text-secondary-foreground";
       default:
         return "bg-muted text-muted-foreground";
     }
   };
+  // Utility function to conditionally hide text content when sidebar is collapsed
+  function getTextClass() {
+    return isCollapsed ? "hidden" : "";
+  }
 
   return (
-    <div className="w-64 bg-card border-r border-border flex flex-col h-screen">
+    <div className={cn("bg-card border-r border-border flex flex-col fixed h-screen  transition-all duration-300 ", isCollapsed ? "w-16" : "w-64")}>
       {/* Logo and Brand */}
-      <div className="p-6 border-b border-border">
+      <div className={cn("p-6  border-b border-border flex justify-between items-center", isCollapsed ? "pl-4 pb-8" : "pr-0 pb-5")}>
         <div className="flex items-center space-x-3">
           <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
             <ChartLine className="w-4 h-4 text-primary-foreground" />
           </div>
-          <div>
+          <div className={cn(getTextClass())}>
             <h1 className="text-lg font-semibold text-foreground">MarketEdge</h1>
             <p className="text-xs text-muted-foreground">Sales Intelligence</p>
           </div>
+        </div>
+        <div className={cn("cursor-pointer rounded-lg p-2 hover:pr-3 transition-all duration-300", isCollapsed ? "rotate-180 absolute left-11 -top-2" : "")}>
+        <ArrowBigLeftDash  size={25} strokeWidth={1} onClick={() => dataStore.toggleCollapsed()} />
         </div>
       </div>
 
@@ -78,13 +89,13 @@ export function Sidebar() {
           <div className="w-10 h-10 bg-accent rounded-full flex items-center justify-center">
             <User className="w-5 h-5 text-accent-foreground" />
           </div>
-          <div className="flex-1 min-w-0">
-            <p className="text-sm font-medium text-foreground truncate" data-testid="text-username">
+          <div className={cn("flex-1 min-w-0", getTextClass())}>
+            <p className={cn("text-sm font-medium text-foreground truncate")} data-testid="text-username">
               {user?.fullName || user?.username}
             </p>
-            <p className="text-xs">
+            <p className={cn("text-xs ")}>
               <span className={cn(
-                "inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium",
+                "inline-flex  items-center px-2 py-0.5 rounded-full text-xs  font-medium ",
                 getRoleColor(user?.role || "")
               )} data-testid="text-role">
                 {getRoleDisplay(user?.role || "")}
@@ -112,10 +123,11 @@ export function Sidebar() {
                     "flex items-center space-x-3 px-3 py-2 text-sm font-medium rounded-md transition-colors",
                     isActive 
                       ? "bg-primary text-primary-foreground" 
-                      : "text-muted-foreground hover:bg-accent hover:text-accent-foreground"
+                      : "text-muted-foreground hover:bg-accent hover:text-accent-foreground",
+                      isCollapsed && "p-2"
                   )} data-testid={`link-${item.name.toLowerCase().replace(/\s+/g, '-')}`}>
                     <Icon className="w-4 h-4" />
-                    <span>{item.name}</span>
+                    <span className={cn(getTextClass())}>{item.name}</span>
                   </a>
                 </Link>
               </li>
@@ -134,7 +146,7 @@ export function Sidebar() {
           data-testid="button-logout"
         >
           <LogOut className="w-4 h-4 mr-3" />
-          {logoutMutation.isPending ? "Signing out..." : "Logout"}
+          <span className={cn(getTextClass())}>{logoutMutation.isPending ? "Signing out..." : "Logout"}</span>
         </Button>
       </div>
     </div>
