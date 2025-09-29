@@ -10,6 +10,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Edit, Trash2, Plus, Search } from "lucide-react";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
+import { AddCompetitorModal } from "./add-competitor-modal";
 // Import removed - using inline modal instead
 
 export function CompetitorDataTable() {
@@ -260,7 +261,7 @@ export function CompetitorDataTable() {
           )}
         </CardContent>
       </Card>
-
+      <AddCompetitorModal isOpen={isModalOpen} onClose={()=>setIsModalOpen(false)}/>
       {/* Modal functionality removed for simplicity */}
     </>
   );

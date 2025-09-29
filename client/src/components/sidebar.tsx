@@ -51,7 +51,7 @@ export function Sidebar() {
   const getRoleColor = (role: string) => {
     switch (role) {
       case "admin":
-        return "bg-destructive text-destructive";
+        return "bg-destructive text-white";
       case "sales_manager":
         return "bg-primary text-primary";
       case "sales_rep":

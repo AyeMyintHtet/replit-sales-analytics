@@ -12,6 +12,7 @@ import { apiRequest, queryClient } from "@/lib/queryClient";
 import { Plus } from "lucide-react";
 import { selectIsCollapsed, useDataStore } from "@/store/useDataStore";
 import { cn } from "@/lib/utils";
+import { AddCompetitorModal } from "@/components/add-competitor-modal";
 
 export default function CompetitorData() {
   const { user } = useAuth();
@@ -23,7 +24,6 @@ export default function CompetitorData() {
     website: "",
     description: "",
   });
-
   const { data: competitors } = useQuery({
     queryKey: ["/api/competitors"],
   });
@@ -222,6 +222,7 @@ export default function CompetitorData() {
 
           {/* Competitor Data Table */}
           <CompetitorDataTable />
+         
         </main>
       </div>
     </div>
