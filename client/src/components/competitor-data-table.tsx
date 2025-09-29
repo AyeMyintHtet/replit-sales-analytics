@@ -261,7 +261,7 @@ export function CompetitorDataTable() {
           )}
         </CardContent>
       </Card>
-      <AddCompetitorModal isOpen={isModalOpen} onClose={()=>setIsModalOpen(false)}/>
+      <AddCompetitorModal isOpen={isModalOpen} onClose={()=>setIsModalOpen(false)} editingEntry={editingEntry}/>
       {/* Modal functionality removed for simplicity */}
     </>
   );

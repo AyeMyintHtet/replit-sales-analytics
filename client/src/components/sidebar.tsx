@@ -23,7 +23,7 @@ const navigation = [
   { name: "Market Trends", href: "/market-trends", icon: TrendingUp },
   { name: "Add Data", href: "/add-data", icon: Plus },
   { name: "User Management", href: "/user-management", icon: Users, adminOnly: true },
-  { name: "Settings", href: "/settings", icon: Settings },
+  // { name: "Settings", href: "/settings", icon: Settings },
 ];
 
 export function Sidebar() {
