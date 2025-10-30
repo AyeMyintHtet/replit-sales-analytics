@@ -38,7 +38,7 @@ export default defineConfig({
     },
     proxy: {
       "/api": {
-        target: "http://localhost:5000", // <-- backend port
+        target: process.env.NODE_ENV !== "production" ? "http://localhost:5000" : "https://sales-analytics-i87l.onrender.com", // <-- backend port
         changeOrigin: true,
         secure: false,
       },
