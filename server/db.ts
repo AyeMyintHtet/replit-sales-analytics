@@ -21,7 +21,6 @@ export const db = drizzle({ client: pool, schema });
 async function main() {
   const r = await db.execute(sql`SELECT version();`);
   console.log(r.rows[0].version);
-  await pool.end();
 }
 
 main().catch((e) => (console.error(e), process.exit(1)));
